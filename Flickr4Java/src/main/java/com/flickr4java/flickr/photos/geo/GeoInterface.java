@@ -233,8 +233,8 @@ public class GeoInterface {
         if (woeId != null) {
             parameters.put("woe_id", woeId);
         }
-        parameters.put("lat", Float.toString(location.getLatitude()));
-        parameters.put("lon", Float.toString(location.getLongitude()));
+        parameters.put("lat", Double.toString(location.getLatitude()));
+        parameters.put("lon", Double.toString(location.getLongitude()));
         parameters.put("accuracy", Integer.toString(location.getAccuracy()));
 
         // Note: This method requires an HTTP POST request.
@@ -302,8 +302,8 @@ public class GeoInterface {
         if (page > 0) {
             parameters.put("page", Integer.toString(page));
         }
-        parameters.put("lat", Float.toString(location.getLatitude()));
-        parameters.put("lon", Float.toString(location.getLongitude()));
+        parameters.put("lat", Double.toString(location.getLatitude()));
+        parameters.put("lon", Double.toString(location.getLongitude()));
         parameters.put("accuracy", Integer.toString(location.getAccuracy()));
         Response response = transport.get(transport.getPath(), parameters, apiKey, sharedSecret);
         if (response.isError()) {

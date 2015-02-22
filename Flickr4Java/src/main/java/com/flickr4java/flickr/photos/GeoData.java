@@ -8,9 +8,9 @@ package com.flickr4java.flickr.photos;
  */
 public class GeoData {
 
-    private float longitude;
+    private double longitude;
 
-    private float latitude;
+    private double latitude;
 
     private int accuracy;
 
@@ -19,8 +19,8 @@ public class GeoData {
     }
 
     public GeoData(String longitudeStr, String latitudeStr, String accuracyStr) {
-        longitude = Float.parseFloat(longitudeStr);
-        latitude = Float.parseFloat(latitudeStr);
+        longitude = Double.parseDouble(longitudeStr);
+        latitude = Double.parseDouble(latitudeStr);
         accuracy = Integer.parseInt(accuracyStr);
     }
 
@@ -45,19 +45,19 @@ public class GeoData {
         this.accuracy = accuracy;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -81,8 +81,8 @@ public class GeoData {
     @Override
     public int hashCode() {
         int hash = 1;
-        hash += new Float(longitude).hashCode();
-        hash += new Float(latitude).hashCode();
+        hash += new Double(longitude).hashCode();
+        hash += new Double(latitude).hashCode();
         hash += new Integer(accuracy).hashCode();
         return hash;
     }
