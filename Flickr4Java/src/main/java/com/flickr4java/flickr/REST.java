@@ -43,7 +43,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class REST extends Transport {
 
-    private static final Logger logger = Logger.getLogger(REST.class);
+    private static final int BUFFER_SIZE = 2048;
+
+	private static final Logger logger = Logger.getLogger(REST.class);
 
     public static final String PATH = "/services/rest/";
 
@@ -176,7 +178,9 @@ public class REST extends Transport {
         try {
 
             com.flickr4java.flickr.Response response = null;
-            synchronized (mutex) {
+            // TODO: necessary mutex??
+            // synchronized (builder) 
+            {
                 String strXml = scribeResponse.getBody().trim();
                 if (Flickr.debugStream) {
                     logger.debug(strXml);
@@ -184,7 +188,8 @@ public class REST extends Transport {
                 if (strXml.startsWith("oauth_problem=")) {
                     throw new FlickrRuntimeException(strXml);
                 }
-                Document document = builder.parse(new InputSource(new StringReader(strXml)));
+                InputSource inputSource = new InputSource(new StringReader(strXml));
+				Document document = builder.parse(inputSource);
                 response = (com.flickr4java.flickr.Response) responseClass.newInstance();
                 response.parse(document);
             }
@@ -234,7 +239,9 @@ public class REST extends Transport {
             }
 
             Response response = null;
-            synchronized (mutex) {
+            // TODO: necessary mutex??
+            // synchronized (builder) 
+            {
                 Document document = builder.parse(in);
                 response = (Response) responseClass.newInstance();
                 response.parse(document);
@@ -299,7 +306,9 @@ public class REST extends Transport {
 
         try {
             com.flickr4java.flickr.Response response = null;
-            synchronized (mutex) {
+            // TODO: necessary mutex??
+            // synchronized (builder) 
+            {
                 String strXml = scribeResponse.getBody().trim();
                 if (Flickr.debugStream) {
                     logger.debug(strXml);
@@ -419,7 +428,7 @@ public class REST extends Transport {
             buffer.write(("Content-Disposition: form-data; name=\"" + name + "\"; filename=\"" + filename + "\";\r\n").getBytes(CHARSET_NAME));
             buffer.write(("Content-Type: " + fileMimeType + "\r\n\r\n").getBytes(CHARSET_NAME));
             InputStream in = (InputStream) value;
-            byte[] buf = new byte[512];
+            byte[] buf = new byte[BUFFER_SIZE];
 
             int res = -1;
             while ((res = in.read(buf)) != -1) {
